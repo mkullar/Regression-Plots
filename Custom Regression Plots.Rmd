@@ -1,0 +1,40 @@
+---
+title: "Regression Plots"
+author: "Monica Kullar"
+date: "8/11/2022"
+output: html_document
+---
+
+# Add in data variables
+```{r, echo=FALSE, message=FALSE}
+#not all libraries used, but in case of any reshaping or data wrangling, all included as such.
+library(tidyverse)
+library(dplyr)
+library(reshape2)
+library(dplyr)
+library(ggplot2)
+library(ggpubr)
+
+datafile <- read.csv("~/data.csv", sep=",", fill=TRUE, stringsAsFactors = FALSE)
+
+#check class of the data columns
+sapply(datafile, class)
+
+#confirm any NaN values are read in as "NA"
+is.na(datafile)
+
+#pull colnames to copy
+colnames(datafile)
+
+##############################################################
+#       Customized Scatter Plot with Regression Line         #
+##############################################################
+ggplot(na.omit(datafile), aes(x=col1, y=col2)) +
+  geom_point(size=2, position = "jitter", color="darkslategray3") + #jitter the points to avoid them printing on top of each other and choose a custom color
+  geom_smooth(method="lm", color="darkslategray") + #add a regression line
+  xlab("Custom X Axis Label") + #provide clear legend labels
+  ylab("Custom Y Axis Label") +
+  ggtitle("Title") + #title the plot
+  theme_classic() + theme(plot.title = element_text(size = 20, face = "bold")) #adjust the text size of plot
+
+```
